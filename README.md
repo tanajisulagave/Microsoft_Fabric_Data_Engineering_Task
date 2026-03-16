@@ -22,3 +22,69 @@ Source CSV File
 ```
 
 
+## 🏭 Fabric Pipeline Activities:
+ 
+```
+Pipeline: [PL_Swiggy_Pipeline]
+  │
+  ├── Activity 2 : Notebook
+  │     Notebook → Handle All transformation in this notebok (e.g. Handling null values)
+  │
+  ├── Activity 1 : Copy Data
+  │     Source  → CSV file Lakehouse Files)
+  │     Sink    → Lakehouse Table (raw_swiggy_orders)
+  │
+  ├── Activity 3 : Dataflow
+  │     DataFlow → Created Fact and Dim table to create star schema in semantic model
+```
+
+## 🗄️ Data Warehouse
+
+### 📈 Analytics — 20 Business Questions Answered
+#### Category 1 — Sales & Revenue
+#### Category 2 — Delivery Analytics
+#### Category 3 — Customer Behaviour
+#### Category 4 — Quality & Ratings
+
+## 🗄️ Dataflow
+
+### Schema Diagram
+ 
+```
+                    ┌─────────────────────┐
+                    │    Dim_Restaurant   │
+                    │─────────────────────│
+                    │(PK) restaurant_key   │
+                    │    restaurant_name  │
+                    │    cuisine_type     │
+                    └──────────┬──────────┘
+                               │ Many:1
+        ┌──────────────────────▼──────────────────────┐
+        │                  Fact_Orders                │
+        │─────────────────────────────────────────────│
+        │ PK order_id                                 │
+        │ FK restaurant_key  ──▶ Dim_Restaurant      │
+        │ FK location_key    ──▶ Dim_Location        │
+        │ FK time_key        ──▶ Dim_Time            │
+        │    total_amount                             │
+        │    ordered_qty                              │
+        │    distance_km                              │
+        │    rating_numeric ............              │
+        └──────┬────────────────────┬─────────────────┘
+               │ Many:1             │ Many:1
+    ┌──────────▼──────────┐  ┌──────▼──────────────────┐
+    │    Dim_Location     │  │       Dim_Time           │
+    │─────────────────────│  │──────────────────────────│
+    │ PK location_key     │  │ PK time_key              │
+    │    area_name        │  │    day_name              │
+    │    city_Name        │  │    full_timestamp        |
+    └─────────────────────┘  │    hour                  │
+                             │    is_weelend            │
+                             └──────────────────────────┘
+```
+
+
+## 👤 Author
+ 
+**[Tanaji Sulagave]**
+Data Engineer | Microsoft Fabric | PySpark | Power BI
