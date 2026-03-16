@@ -1,0 +1,14 @@
+Column Name,Data Type,Description,Cleaning/Analysis Importance
+order_id,String,A unique identifier for each food order.,
+order_time,Timestamp,The date and time when the customer placed the order.,Essential for Time-Series analysis and calculating delivery speed.
+delivery_time,Timestamp,The date and time when the food was delivered to the customer.,Used with order_time to find delivery duration. Will be null for non-online orders.
+restaurant,String,The name of the restaurant where the order was placed.,Primary key for Performance analysis (Top restaurants).
+cuisine,String,"The category of food (e.g., Italian, Biryani, Chinese).",Used to identify popular food trends in Bengaluru.
+total_amount,Double/Float,The total cost of the order in INR (₹).,Key metric for Revenue analysis and finding Average Order Value (AOV).
+rating,String,"Customer rating provided for the order (e.g., ""4.5/5"", ""NEW"").",Requires String splitting and casting to Float for mathematical analysis.
+location,String,"The specific area in Bengaluru (e.g., Koramangala, HSR Layout).",Used for Geospatial analysis to see which areas are busiest.
+city,String,The city name (Bengaluru).,"Often contains typos (e.g., Bnegaluru) that require standardization."
+ordered_qty,Integer,The number of items included in a single order.,Helps calculate Price per unit and volume of food sold.
+book_table,String,Indicates if the customer booked a table (Yes/No).,Categorical feature to compare Dining vs. Delivery spending.
+online_order,String,Indicates if the order was placed via an app/website (Yes/No).,Critical for conditional cleaning of delivery and distance columns.
+distance_km,Double/Float,The distance between the restaurant and the delivery point.,Used to analyze logistics efficiency and delivery speed.
