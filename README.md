@@ -86,5 +86,10 @@ Pipeline: [PL_Swiggy_Pipeline]
 
 ## 👤 Author
  
-**[Tanaji Sulagave]**
+**[Tanaji Sulagave]** 
+
 Data Engineer | Microsoft Fabric | PySpark | Power BI
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/tanaji-sulagave-21268563)
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tanajisulagave)
