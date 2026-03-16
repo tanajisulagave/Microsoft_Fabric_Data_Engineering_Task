@@ -1,0 +1,132 @@
+{
+    "name": "PL_Swiggy_Pipeline",
+    "objectId": "a046c095-2d38-49ae-9d63-88d98f6998b4",
+    "properties": {
+        "activities": [
+            {
+                "name": "NB_SwiggyFoodDelivery",
+                "type": "TridentNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "7b2bb0a1-17f3-4158-b74e-57f03e5b59c6",
+                    "workspaceId": "338b6601-2c22-4abc-b533-b243d2df401f"
+                }
+            },
+            {
+                "name": "Lakehouse_to_Warehouse",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "NB_SwiggyFoodDelivery",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "source": {
+                        "type": "LakehouseTableSource",
+                        "datasetSettings": {
+                            "annotations": [],
+                            "linkedService": {
+                                "name": "lh_SwiggyFoodDelivery",
+                                "properties": {
+                                    "annotations": [],
+                                    "type": "Lakehouse",
+                                    "typeProperties": {
+                                        "workspaceId": "338b6601-2c22-4abc-b533-b243d2df401f",
+                                        "artifactId": "787c4bfb-0655-4a50-aced-85725de01263",
+                                        "rootFolder": "Tables"
+                                    }
+                                }
+                            },
+                            "type": "LakehouseTable",
+                            "schema": [],
+                            "typeProperties": {
+                                "schema": "dbo",
+                                "table": "swiggy_delta_table"
+                            }
+                        }
+                    },
+                    "sink": {
+                        "type": "DataWarehouseSink",
+                        "allowCopyCommand": true,
+                        "writeBehavior": "Insert",
+                        "tableOption": "autoCreate",
+                        "datasetSettings": {
+                            "annotations": [],
+                            "linkedService": {
+                                "name": "dw_SwiggyFoodDelivery",
+                                "properties": {
+                                    "annotations": [],
+                                    "type": "DataWarehouse",
+                                    "typeProperties": {
+                                        "endpoint": "pkj4wovsobketmmgbz4nz2zxbu-aftiwmzcfs6evnjtwjb5fx2ad4.datawarehouse.fabric.microsoft.com",
+                                        "artifactId": "e564d53c-2852-43f9-97b9-0ac6839caa63",
+                                        "workspaceId": "338b6601-2c22-4abc-b533-b243d2df401f"
+                                    }
+                                }
+                            },
+                            "type": "DataWarehouseTable",
+                            "schema": [],
+                            "typeProperties": {
+                                "schema": "swiggyFood",
+                                "table": "dw_swiggy_delta_table"
+                            }
+                        }
+                    },
+                    "enableStaging": true,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                }
+            },
+            {
+                "name": "warehuse_dataflow_F_D",
+                "type": "RefreshDataflow",
+                "dependsOn": [
+                    {
+                        "activity": "Lakehouse_to_Warehouse",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "dataflowId": "68a59804-f633-4121-aa21-78fba540ddd0",
+                    "workspaceId": "338b6601-2c22-4abc-b533-b243d2df401f",
+                    "notifyOption": "NoNotification",
+                    "dataflowType": "Dataflow-Gen2"
+                }
+            }
+        ],
+        "lastModifiedByObjectId": "59841221-5d7f-487f-a9c9-4bdd59e74675",
+        "lastPublishTime": "2026-03-15T18:37:16Z"
+    }
+}
