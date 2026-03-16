@@ -7,7 +7,7 @@ An end-to-end **Data Engineering pipeline** built on **Microsoft Fabric** that i
  
 ## 🏗️ Architecture Diagram
 
-![Architecture Diagram](Fabric_Image.png)
+![Architecture Diagram](Fabric_Task.svg)
 
 **Data Flow:**
 ```
